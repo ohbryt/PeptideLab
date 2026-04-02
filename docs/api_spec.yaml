@@ -1,0 +1,350 @@
+openapi: 3.0.0
+info:
+  title: PeptideLab API
+  description: |
+    AI-Powered Peptide Synthesis Service API.
+    
+    이 API는 AI가 설계한 펩타이드를 합성하고 Assay까지 한站式으로 제공합니다.
+    
+    ## Features
+    - 펩타이드 합성 (Standard/Modified)
+    - HPLC, Mass Spec 분석
+    - Binding assays (SPR, BLI)
+    - ADMET 예측
+  version: 1.0.0
+  contact:
+    email: contact@peptidelab.kr
+
+servers:
+  - url: https://api.peptidelab.kr/v1
+    description: Production
+  - url: https://staging.peptidelab.kr/v1
+    description: Staging
+
+paths:
+  /orders:
+    post:
+      summary: Create new peptide order
+      description: |
+        새 펩타이드 주문을 생성합니다.
+        
+        ## Request Body
+        - `sequence`:氨基酸 서열 (1-100 residues)
+        - `modifications`: 변형 목록 (Ahx, pSer, TFA, etc.)
+        - `quantity`: 수량 (10mg, 50mg, 100mg, 1g)
+        - `purity`: 요구 순도 (>90%, >95%, >98%)
+        - `assays`: 추가 assay 목록
+      operationId: createOrder
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+            example:
+              sequence: "YGRKKRRQRRR-Ahx-DEEVSPSLLQ"
+              modifications: ["Ahx"]
+              quantity: "50mg"
+              purity: ">95%"
+              assays: ["hplc", "ms"]
+              email: "researcher@company.com"
+              notes: "TAT-conjugated FGF21 mimetic"
+      responses:
+        '200':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /orders/{orderId}:
+    get:
+      summary: Get order status
+      description: 주문의 현재 상태를 조회합니다.
+      operationId: getOrderStatus
+      tags:
+        - Orders
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "PS-20260403-ABC123"
+      responses:
+        '200':
+          description: Order status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatus'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /orders/{orderId}/results:
+    get:
+      summary: Get order results
+      description: 완료된 주문의 결과를 조회합니다.
+      operationId: getOrderResults
+      tags:
+        - Orders
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResults'
+        '202':
+          description: Order still processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "processing"
+                  progress:
+                    type: integer
+                    example: 75
+
+  /pricing:
+    get:
+      summary: Get pricing information
+      description: 서비스 가격표를 조회합니다.
+      operationId: getPricing
+      tags:
+        - Info
+      responses:
+        '200':
+          description: Pricing information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pricing'
+
+  /partners:
+    get:
+      summary: Get partner laboratories
+      description: 제휴 실험실 정보를 조회합니다.
+      operationId: getPartners
+      tags:
+        - Info
+      responses:
+        '200':
+          description: Partner labs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partners'
+
+components:
+  schemas:
+    OrderRequest:
+      type: object
+      required:
+        - sequence
+        - email
+      properties:
+        sequence:
+          type: string
+          description: 펩타이드氨基酸 서열
+          pattern: '^[A-Za-z\-\s]+$'
+          maxLength: 500
+          example: "YGRKKRRQRRR-Ahx-DFTFVSNPKUWNNAV"
+        modifications:
+          type: array
+          items:
+            type: string
+            enum: ["Ahx", "pSer", "TFA", "Acetyl", "Amide", "Biotin", "FITC"]
+          description: 변형 목록
+          example: ["Ahx", "pSer"]
+        quantity:
+          type: string
+          enum: ["10mg", "50mg", "100mg", "1g"]
+          default: "50mg"
+        purity:
+          type: string
+          enum: [">90%", ">95%", ">98%"]
+          default: ">95%"
+        assays:
+          type: array
+          items:
+            type: string
+            enum: ["hplc", "ms", "spr", "bli", "cell", "admet"]
+          description: 추가 assay
+          example: ["hplc", "ms"]
+        email:
+          type: string
+          format: email
+          description: 연락처 이메일
+        notes:
+          type: string
+          description: 특별 요청 사항
+
+    OrderResponse:
+      type: object
+      properties:
+        order_id:
+          type: string
+          example: "PS-20260403-ABC123"
+        sequence:
+          type: string
+        status:
+          type: string
+          enum: ["received", "synthesizing", "completed", "shipped"]
+        created_at:
+          type: string
+          format: date-time
+        estimated_delivery:
+          type: string
+          format: date
+        price:
+          type: string
+          example: "₩500,000"
+        partner_lab:
+          type: string
+          example: "Anygen"
+
+    OrderStatus:
+      type: object
+      properties:
+        order_id:
+          type: string
+        status:
+          type: string
+        stage:
+          type: string
+          description: 현재 공정 단계
+          example: "Quality control"
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: 완료 백분율
+        updated_at:
+          type: string
+          format: date-time
+        tracking_url:
+          type: string
+          nullable: true
+
+    OrderResults:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["completed"]
+        order_id:
+          type: string
+        sequence:
+          type: string
+        results:
+          type: object
+          properties:
+            purity:
+              type: string
+              example: "98.5% (HPLC)"
+            mass:
+              type: string
+              example: "4523.2 Da (Confirmed)"
+            quantity_delivered:
+              type: string
+              example: "52mg"
+            coa_url:
+              type: string
+              description: Certificate of Analysis PDF URL
+
+    Pricing:
+      type: object
+      properties:
+        synthesis:
+          type: object
+          properties:
+            base_per_mg:
+              type: string
+              example: "₩80,000"
+            modified_residue:
+              type: string
+              example: "₩15,000-30,000"
+        assays:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            hplc: "₩50,000"
+            ms: "₩80,000"
+            spr: "₩300,000"
+        packages:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            basic: "₩250,000"
+            standard: "₩500,000"
+            premium: "₩1,200,000"
+
+    Partners:
+      type: object
+      properties:
+        synthesis:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              min_qty:
+                type: string
+              lead_time:
+                type: string
+              notes:
+                type: string
+        assay:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              services:
+                type: array
+                items:
+                  type: string
+              lead_time:
+                type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid sequence format"
+        code:
+          type: string
+          example: "INVALID_INPUT"
+
+tags:
+  - name: Orders
+    description: 주문 관리
+  - name: Info
+    description: 가격 및 파트너 정보

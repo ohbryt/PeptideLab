@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeptideLab - AI-Powered Peptide Synthesis for Biotech</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--light);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 1000;
+            padding: 15px 40px;
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        /* Stats */
+        .stats {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .stat-item p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        /* Features */
+        .features {
+            padding: 100px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            margin-bottom: 10px;
+        }
+        
+        .step p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .price-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .price-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.15);
+        }
+        
+        .price-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .price-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .price-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-features li::before {
+            content: "✓";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        /* API Section */
+        .api {
+            padding: 100px 0;
+        }
+        
+        .api-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .api-code {
+            background: #1e1e2e;
+            border-radius: 16px;
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        .api-code pre {
+            margin: 0;
+            color: #cdd6f4;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        .code-comment { color: #6c7086; }
+        .code-key { color: #89b4fa; }
+        .code-string { color: #a6e3a1; }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        
+        .testimonial {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 20px;
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1rem;
+        }
+        
+        .testimonial-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps { flex-direction: column; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .price-card.featured { transform: none; }
+            .api-content { grid-template-columns: 1fr; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🧬 PeptideLab</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#api">API</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI-Designed Peptides,<br>Delivered with Excellence</h1>
+            <p class="subtitle">
+                합성 가능한 고품질 펩타이드 설계부터 제조까지.<br>
+               亚太地区最具竞争力的多肽合成服务。
+            </p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">시작하기 Get Started →</a>
+                <a href="#api" class="btn btn-secondary">API 문서 보기</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>2-4주</h3>
+                    <p>빠른 납기 Fast Delivery</p>
+                </div>
+                <div class="stat-item">
+                    <h3>>95%</h3>
+                    <p>높은 순도 High Purity</p>
+                </div>
+                <div class="stat-item">
+                    <h3>30-50%</h3>
+                    <p>저렴한 가격 Savings</p>
+                </div>
+                <div class="stat-item">
+                    <h3>API</h3>
+                    <p>AI Agent 통합 지원</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>왜 PeptideLab인가?</h2>
+                <p>EVP (Exceptional Viable Product)를 지향하는 서비스</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>빠른 납기</h3>
+                    <p>2-4주 내合成完成。紧急订单可加急处理，確保您的研究进度不受影響。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>탁월한 품질</h3>
+                    <p>>95% HPLC純度，每批次附帶完整QC報告。我們只交付最好的產品。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>경쟁력 있는 가격</h3>
+                    <p>比美國/歐洲供應商便宜30-50%，品質相同。Korean quality, global price.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>API-First 설계</h3>
+                    <p>AI Agent와完美的集成。支持Claude Code、OpenClaw等主流AI平台。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>종합 분석</h3>
+                    <p>HPLC, MS, SPR, Cell-based assays, ADMET。提供一站式服務。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🇰🇷</div>
+                    <h3>한국 제조</h3>
+                    <p>韩国顶级实验室合成，ISO认证质量体系。信任与品质的保证。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>작동 방식</h2>
+                <p>简单4步，获得您的定制多肽</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>설계 Submit</h3>
+                    <p>시퀀스를 API또는表单提交。我们接受任何格式。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>합성 Synthesize</h3>
+                    <p>한국 Lab에서 최적の条件合成。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>품질관리 QC</h3>
+                    <p>HPLC, Mass Spec으로 purity 확인。</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>배송 Deliver</h3>
+                    <p>완성된 peptide와 CoA 함께 배달。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>가격 plans</h2>
+                <p>研究友好的定价，无需长期合同</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Basic</h3>
+                    <div class="price">₩250K<span>/peptide</span></div>
+                    <ul class="price-features">
+                        <li>合成 50mg</li>
+                        <li>HPLC纯化</li>
+                        <li>质检报告 (CoA)</li>
+                        <li>标准交付 (4周)</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">开始 Start →</a>
+                </div>
+                
+                <div class="price-card featured">
+                    <h3>Standard ⭐</h3>
+                    <div class="price">₩500K<span>/peptide</span></div>
+                    <ul class="price-features">
+                        <li>合成 50mg (>95%)</li>
+                        <li>HPLC + Mass Spec</li>
+                        <li>完整CoA报告</li>
+                        <li>快速交付 (3周)</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">最受欢迎 Most Popular →</a>
+                </div>
+                
+                <div class="price-card">
+                    <h3>Premium</h3>
+                    <div class="price">₩1.2M<span>/peptide</span></div>
+                    <ul class="price-features">
+                        <li>合成 + 全套Assays</li>
+                        <li>SPR/BLI Binding数据</li>
+                        <li>ADMET预测</li>
+                        <li>优先交付 (2周)</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">企业用户 Enterprise →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- API Section -->
+    <section class="api" id="api">
+        <div class="container">
+            <div class="section-header">
+                <h2>AI Agent Integration</h2>
+                <p>为AI时代设计的多肽合成API</p>
+            </div>
+            
+            <div class="api-content">
+                <div>
+                    <h3>简单集成，简单使用</h3>
+                    <p style="margin: 20px 0; color: var(--gray);">
+                        Claude Code, OpenClaw, 또는任何AI Agent都可以轻松集成。
+                        只需几行代码，即可将多肽合成添加到您的AI工作流中。
+                    </p>
+                    <ul style="list-style: none; margin-top: 30px;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ REST API 完全文档化</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ 支持Webhook实时更新</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ 多语言SDK (Python, JavaScript)</li>
+                        <li style="padding: 10px 0;">✓ 24/7 自动订单跟踪</li>
+                    </ul>
+                </div>
+                <div class="api-code">
+                    <pre><span class="code-comment"># POST /api/v1/orders</span>
+{
+  <span class="code-key">"sequence"</span>: <span class="code-string">"YGRKKRRQRRR-Ahx-DEEVSPSLLQ"</span>,
+  <span class="code-key">"modifications"</span>: [<span class="code-string">"Ahx"</span>, <span class="code-string">"pSer"</span>],
+  <span class="code-key">"quantity"</span>: <span class="code-string">"50mg"</span>,
+  <span class="code-key">"purity"</span>: <span class="code-string">">95%"</span>,
+  <span class="code-key">"assays"</span>: [<span class="code-string">"hplc"</span>, <span class="code-string">"ms"</span>],
+  <span class="code-key">"email"</span>: <span class="code-string">"researcher@company.com"</span>
+}
+
+<span class="code-comment"># Response:</span>
+{
+  <span class="code-key">"order_id"</span>: <span class="code-string">"PS-20260403-ABC123"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"synthesizing"</span>,
+  <span class="code-key">"estimated_delivery"</span>: <span class="code-string">"2026-05-01"</span>,
+  <span class="code-key">"price"</span>: <span class="code-string">"₩500,000"</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>早期用户 Early Users</h2>
+                <p>来自亚洲AI Biotech公司的反馈</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "PeptideLab를 사용해서 정말 만족합니다. 다른 국내 서비스보다가격도 저렴하고何よりも品質が素晴らしい。AI 연구에 필수적인 파트너가 되었습니다。"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">J</div>
+                        <div class="testimonial-info">
+                            <h4>研究总监</h4>
+                            <p>AI Biotech, Seoul</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">
+                        "API集成が简单くて、Claude Codeと的直接連携できました。研究の自动化にPeptideLabは不可欠です。強く 추천합니다!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">K</div>
+                        <div class="testimonial-info">
+                            <h4>CTO</h4>
+                            <p>Drug Discovery AI, Tokyo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>准备好了吗?</h2>
+            <p>AI-设计的肽，从今天开始。<br>첫 peptide 주문客户提供特别折扣!</p>
+            <div class="hero-cta">
+                <a href="mailto:contact@peptidelab.kr" class="btn btn-primary">📧 contact@peptidelab.kr</a>
+            </div>
+            <p style="margin-top: 30px; font-size: 0.95rem; opacity: 0.7;">
+                微信: peptidelab_kr | Line: @peptidelab
+            </p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>🧬 PeptideLab</h3>
+                    <p>
+                        亚太地区AI Biotech首选的多肽合成合作伙伴。
+                        Korean-made quality, competitive pricing, API-first service.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <a href="#pricing">合成 Synthesis</a>
+                    <a href="#pricing">分析 Assays</a>
+                    <a href="#api">API集成</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <a href="#">API文档</a>
+                    <a href="#">使用指南</a>
+                    <a href="#">常见问题</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="#">关于我们</a>
+                    <a href="#">联系方式</a>
+                    <a href="#">合作伙伴</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 PeptideLab. 韩国制造 | Made in Korea</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
