@@ -53,19 +53,22 @@
 
 ## 파트너 Lab (국내)
 
-### 합성 파트너
-| 회사 | Min qty | 납기 | 가격대 |
-|------|---------|------|--------|
-| **Anygen** | 10mg | 2-3주 | ₩~100K/mg |
-| **Kendrick Labs** | 10mg | 2주 | ₩~120K/mg |
-| **Peptron** | 50mg | 3-4주 | ₩~150K/mg (GMP) |
+### 합성 파트너 (Anygen)
+| 항목 | 내용 |
+|------|------|
+| **회사** | Anygen (에니젠) |
+| **위치** | 한국 |
+| **납기** | 2-3주 |
+| **가격대** | ₩~100K/mg |
+| **특징** | 한국 대표 Peptide 합성 회사 |
 
-### Assay 파트너
-| 회사 | 서비스 | 가격 |
-|------|--------|------|
-| **KIST** | SPR, BLI | ₩300-500K |
-| **SNU** | Cell-based | ₩400-800K |
-| **고려대** | ADMET | ₩500-1M |
+### Wet Validation 파트너 (BrownBiotech)
+| 항목 | 내용 |
+|------|------|
+| **회사** | BrownBiotech |
+| **위치** | Brown University / Korea |
+| **서비스** | Cell-based assay, Binding, ADMET |
+| **역할** | Peptide 효능/독성 검증 |
 
 ---
 
