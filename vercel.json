@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "docs/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "docs/index.html"
+    }
+  ],
+  "regions": ["icn1"],
+  "env": {
+    "PYTHON_VERSION": "3.11"
+  }
+}
