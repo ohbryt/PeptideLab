@@ -62,13 +62,13 @@
 | **가격대** | ₩~100K/mg |
 | **특징** | 한국 대표 Peptide 합성 회사 |
 
-### Wet Validation 파트너 (BrownBiotech)
+### Wet Validation (자사 - BrownBiotech)
 | 항목 | 내용 |
 |------|------|
-| **회사** | BrownBiotech |
-| **위치** | Brown University / Korea |
+| **회사** | BrownBiotech (자사) |
+| **위치** | Brown University |
 | **서비스** | Cell-based assay, Binding, ADMET |
-| **역할** | Peptide 효능/독성 검증 |
+| **역할** | Peptide 효능/독성 검증 (수익 창출) |
 
 ---
 
