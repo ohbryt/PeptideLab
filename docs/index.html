@@ -6,12 +6,14 @@
     <title>PeptideLab - AI-Powered Peptide Synthesis Service</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --dark: #0f172a;
-            --gray: #64748b;
-            --light: #f8fafc;
+            --primary: #5B5FE4;
+            --primary-light: #818CF8;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --dark: #0F172A;
+            --gray: #64748B;
+            --light: #F8FAFC;
+            --white: #FFFFFF;
         }
         
         * {
@@ -20,11 +22,15 @@
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
             line-height: 1.7;
             color: var(--dark);
-            background: var(--light);
+            background: var(--white);
         }
         
         /* Navigation */
@@ -34,31 +40,52 @@
             left: 0;
             right: 0;
             background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             z-index: 1000;
-            padding: 15px 40px;
+            padding: 16px 0;
         }
         
         nav .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
         .logo {
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
         }
         
         .nav-links a {
-            margin-left: 30px;
             text-decoration: none;
             color: var(--gray);
             font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.2s;
         }
         
@@ -66,47 +93,93 @@
             color: var(--primary);
         }
         
+        .nav-cta {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        
+        .nav-cta:hover {
+            background: var(--primary-light);
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
         
         /* Hero */
         .hero {
-            padding: 160px 0 100px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-            color: white;
+            padding: 140px 0 100px;
+            background: linear-gradient(180deg, #F0F4FF 0%, var(--white) 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(91, 95, 228, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(16, 185, 129, 0.06) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(91, 95, 228, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            margin-bottom: 20px;
             line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.95;
-            max-width: 700px;
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
             margin: 0 auto 40px;
         }
         
-        .hero-cta {
+        .hero-buttons {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
         }
         
         .btn {
-            padding: 16px 36px;
-            border-radius: 50px;
+            padding: 14px 28px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.2s;
             display: inline-flex;
             align-items: center;
@@ -114,29 +187,32 @@
         }
         
         .btn-primary {
-            background: white;
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
         }
         
         .btn-primary:hover {
+            background: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 24px rgba(91, 95, 228, 0.3);
         }
         
-        .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
+        .btn-outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid #E2E8F0;
         }
         
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.25);
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
         /* Stats */
         .stats {
             padding: 60px 0;
-            background: white;
+            background: var(--white);
+            border-bottom: 1px solid #F1F5F9;
         }
         
         .stats-grid {
@@ -147,18 +223,19 @@
         }
         
         .stat-item h3 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: var(--primary);
+            margin-bottom: 4px;
         }
         
         .stat-item p {
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
-        /* Features */
-        .features {
+        /* Section Headers */
+        .section {
             padding: 100px 0;
         }
         
@@ -167,54 +244,69 @@
             margin-bottom: 60px;
         }
         
+        .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(91, 95, 228, 0.1), rgba(16, 185, 129, 0.1));
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .section-header p {
             color: var(--gray);
             font-size: 1.1rem;
-            max-width: 600px;
+            max-width: 550px;
             margin: 0 auto;
         }
         
-        .feature-grid {
+        /* Features */
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 24px;
         }
         
         .feature-card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid #F1F5F9;
             transition: all 0.3s;
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary-light);
+            box-shadow: 0 12px 40px rgba(91, 95, 228, 0.08);
+            transform: translateY(-4px);
         }
         
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), #a855f7);
-            border-radius: 15px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 20px;
         }
         
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
         
         .feature-card p {
@@ -224,25 +316,24 @@
         
         /* How It Works */
         .how-it-works {
-            padding: 100px 0;
-            background: white;
+            background: var(--light);
         }
         
         .steps {
-            display: flex;
-            justify-content: space-between;
-            gap: 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            position: relative;
         }
         
         .step {
-            flex: 1;
             text-align: center;
             position: relative;
         }
         
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: var(--primary);
             color: white;
             border-radius: 50%;
@@ -250,61 +341,77 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(91, 95, 228, 0.25);
         }
         
         .step h3 {
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
         }
         
         .step p {
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         /* Pricing */
         .pricing {
-            padding: 100px 0;
-            background: var(--light);
+            background: var(--white);
         }
         
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 24px;
             max-width: 1000px;
             margin: 0 auto;
         }
         
         .price-card {
-            background: white;
-            border-radius: 24px;
-            padding: 50px 40px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 32px;
             text-align: center;
-            border: 2px solid transparent;
+            border: 2px solid #F1F5F9;
             transition: all 0.3s;
         }
         
         .price-card.featured {
             border-color: var(--primary);
-            transform: scale(1.05);
-            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 20px 60px rgba(91, 95, 228, 0.15);
+            transform: scale(1.03);
+            position: relative;
+        }
+        
+        .price-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         
         .price-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
         }
         
-        .price {
-            font-size: 3.5rem;
+        .price-card .price {
+            font-size: 3rem;
             font-weight: 800;
             color: var(--primary);
             margin: 20px 0;
         }
         
-        .price span {
+        .price-card .price span {
             font-size: 1rem;
             color: var(--gray);
             font-weight: 400;
@@ -312,81 +419,129 @@
         
         .price-features {
             list-style: none;
-            margin: 30px 0;
             text-align: left;
+            margin: 24px 0;
         }
         
         .price-features li {
             padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #F1F5F9;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.95rem;
         }
         
         .price-features li::before {
-            content: "✓";
+            content: '✓';
             color: var(--secondary);
             font-weight: bold;
         }
         
-        /* API Section */
-        .api {
-            padding: 100px 0;
+        /* API */
+        .api-section {
+            background: linear-gradient(180deg, var(--light) 0%, var(--white) 100%);
         }
         
-        .api-content {
+        .api-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
         }
         
+        .api-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .api-info p {
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+        
+        .api-features {
+            list-style: none;
+        }
+        
+        .api-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        
+        .api-features li span {
+            color: var(--secondary);
+        }
+        
         .api-code {
-            background: #1e1e2e;
+            background: #1E1E2E;
             border-radius: 16px;
-            padding: 30px;
+            padding: 24px;
             overflow-x: auto;
         }
         
         .api-code pre {
             margin: 0;
-            color: #cdd6f4;
+            color: #CDD6F4;
             font-family: 'Monaco', 'Menlo', monospace;
             font-size: 0.85rem;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
-        .code-comment { color: #6c7086; }
-        .code-key { color: #89b4fa; }
-        .code-string { color: #a6e3a1; }
+        .code-comment { color: #6C7086; }
+        .code-key { color: #89B4FA; }
+        .code-string { color: #A6E3A1; }
         
         /* CTA */
-        .cta {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
             color: white;
             text-align: center;
+            padding: 80px 0;
         }
         
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
         }
         
-        .cta p {
-            font-size: 1.2rem;
+        .cta-section p {
+            font-size: 1.1rem;
             opacity: 0.9;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 32px;
+        }
+        
+        .cta-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        
+        .cta-email:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+        
+        .cta-note {
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
         
         /* Footer */
         footer {
             background: var(--dark);
-            color: #94a3b8;
+            color: #94A3B8;
             padding: 60px 0 30px;
         }
         
@@ -397,27 +552,28 @@
             margin-bottom: 40px;
         }
         
-        .footer-brand h3 {
+        .footer-brand .logo {
             color: white;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
         
         .footer-brand p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.7;
         }
         
         .footer-links h4 {
             color: white;
             margin-bottom: 20px;
+            font-size: 0.95rem;
         }
         
         .footer-links a {
             display: block;
-            color: #94a3b8;
+            color: #94A3B8;
             text-decoration: none;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
             transition: color 0.2s;
         }
         
@@ -426,21 +582,21 @@
         }
         
         .footer-bottom {
-            border-top: 1px solid #334155;
-            padding-top: 30px;
+            border-top: 1px solid #1E293B;
+            padding-top: 24px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.2rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .feature-grid { grid-template-columns: 1fr; }
-            .steps { flex-direction: column; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: repeat(2, 1fr); }
             .pricing-grid { grid-template-columns: 1fr; }
             .price-card.featured { transform: none; }
-            .api-content { grid-template-columns: 1fr; }
+            .api-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
@@ -449,12 +605,15 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">🧬 PeptideLab</div>
+            <a href="#" class="logo">
+                <div class="logo-icon">🧬</div>
+                PeptideLab
+            </a>
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#api">API</a>
-                <a href="#contact">Contact</a>
+                <a href="#contact" class="nav-cta">Get Started</a>
             </div>
         </div>
     </nav>
@@ -462,14 +621,17 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
+            <div class="hero-badge">
+                🧪 Korean-Made Quality • AI-First Design
+            </div>
             <h1>AI-Designed Peptides,<br>Delivered with Excellence</h1>
             <p class="subtitle">
                 AI가 설계한 펩타이드를 합성부터 검증까지.<br>
                 Korean-made quality with global competitive pricing.
             </p>
-            <div class="hero-cta">
+            <div class="hero-buttons">
                 <a href="#contact" class="btn btn-primary">시작하기 Get Started →</a>
-                <a href="#api" class="btn btn-secondary">API 문서 보기</a>
+                <a href="#api" class="btn btn-outline">API 문서 보기</a>
             </div>
         </div>
     </section>
@@ -480,15 +642,15 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <h3>2-4주</h3>
-                    <p>빠른 납기 Fast Delivery</p>
+                    <p>빠른 납기 / Fast Delivery</p>
                 </div>
                 <div class="stat-item">
                     <h3>>95%</h3>
-                    <p>높은 순도 High Purity</p>
+                    <p>높은 순도 / High Purity</p>
                 </div>
                 <div class="stat-item">
                     <h3>30-50%</h3>
-                    <p>저렴한 가격 Savings</p>
+                    <p>저렴한 가격 / Cost Savings</p>
                 </div>
                 <div class="stat-item">
                     <h3>API</h3>
@@ -499,14 +661,15 @@
     </section>
     
     <!-- Features -->
-    <section class="features" id="features">
+    <section class="section" id="features">
         <div class="container">
             <div class="section-header">
+                <span class="section-label">Why Us</span>
                 <h2>왜 PeptideLab인가? / Why PeptideLab?</h2>
                 <p>EVP (Exceptional Viable Product)를 지향하는 서비스</p>
             </div>
             
-            <div class="feature-grid">
+            <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <h3>빠른 납기 / Fast Delivery</h3>
@@ -525,7 +688,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">🔗</div>
                     <h3>API-First 설계 / API-First Design</h3>
-                    <p>Claude Code, OpenClaw 등 AI Agent와 완벽 통합. API-first for AI biotech.</p>
+                    <p>Claude Code, OpenClaw 등 AI Agent와 완벽 통합.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
@@ -535,16 +698,17 @@
                 <div class="feature-card">
                     <div class="feature-icon">🇰🇷</div>
                     <h3>한국 제조 / Korean Made</h3>
-                    <p>Anygen 합성 + BrownBiotech 검증. 한국산 품질的双重保证.</p>
+                    <p>Anygen 합성 + BrownBiotech 검증. 한국산 품질의双重保证.</p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- How It Works -->
-    <section class="how-it-works">
+    <section class="section how-it-works">
         <div class="container">
             <div class="section-header">
+                <span class="section-label">Process</span>
                 <h2>작동 방식 / How It Works</h2>
                 <p>간단 4단계로 맞춤 펩타이드를到手하세요</p>
             </div>
@@ -553,31 +717,32 @@
                 <div class="step">
                     <div class="step-number">1</div>
                     <h3>제출 / Submit</h3>
-                    <p>시퀀스를 API 또는 폼으로 제출하세요.</p>
+                    <p>시퀀스를 API 또는 폼으로 제출</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <h3>합성 / Synthesize</h3>
-                    <p>한국 Lab에서 최적의 조건으로 합성.</p>
+                    <p>한국 Lab에서 최적의 조건으로</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>품질관리 / QC</h3>
-                    <p>HPLC, Mass Spec으로 purity 확인.</p>
+                    <p>HPLC, Mass Spec으로 purity 확인</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
                     <h3>배송 / Deliver</h3>
-                    <p>완성된 peptide와 CoA 함께 배달.</p>
+                    <p>완성 peptide와 CoA 함께 배달</p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Pricing -->
-    <section class="pricing" id="pricing">
+    <section class="section pricing" id="pricing">
         <div class="container">
             <div class="section-header">
+                <span class="section-label">Pricing</span>
                 <h2>가격 / Pricing</h2>
                 <p>연구 친화적 가격. 장기 계약 불필요.</p>
             </div>
@@ -592,7 +757,7 @@
                         <li>품질보고서 (CoA)</li>
                         <li>표준 납기 / Standard (4주)</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">시작하기 Start →</a>
+                    <a href="#contact" class="btn btn-outline">시작하기 →</a>
                 </div>
                 
                 <div class="price-card featured">
@@ -616,32 +781,33 @@
                         <li>ADMET 예측</li>
                         <li>우선 납기 / Priority (2주)</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">기업용 / Enterprise →</a>
+                    <a href="#contact" class="btn btn-outline">기업용 →</a>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- API Section -->
-    <section class="api" id="api">
+    <!-- API -->
+    <section class="section api-section" id="api">
         <div class="container">
             <div class="section-header">
+                <span class="section-label">Developers</span>
                 <h2>AI Agent Integration</h2>
                 <p>AI 시대를 위해 설계된 펩타이드 합성 API</p>
             </div>
             
-            <div class="api-content">
-                <div>
+            <div class="api-grid">
+                <div class="api-info">
                     <h3>간단 통합, 쉽게 사용 / Easy Integration</h3>
-                    <p style="margin: 20px 0; color: var(--gray);">
+                    <p>
                         Claude Code, OpenClaw 또는 어떤 AI Agent와도 쉽게 통합.
-                        몇 줄의 코드로 다肽 합성을 AI 워크플로우에 추가하세요.
+                        몇 줄의 코드로 peptide 합성을 AI 워크플로우에 추가하세요.
                     </p>
-                    <ul style="list-style: none; margin-top: 30px;">
-                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ REST API 완전 문서화 / Fully documented</li>
-                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ Webhook 실시간 업데이트 / Real-time updates</li>
-                        <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">✓ 다국어 SDK (Python, JavaScript)</li>
-                        <li style="padding: 10px 0;">✓ 24/7 자동 주문 추적 / Auto order tracking</li>
+                    <ul class="api-features">
+                        <li><span>✓</span> REST API 완전 문서화</li>
+                        <li><span>✓</span> Webhook 실시간 업데이트</li>
+                        <li><span>✓</span> 다국어 SDK (Python, JavaScript)</li>
+                        <li><span>✓</span> 24/7 자동 주문 추적</li>
                     </ul>
                 </div>
                 <div class="api-code">
@@ -659,7 +825,6 @@
 {
   <span class="code-key">"order_id"</span>: <span class="code-string">"PS-20260403-ABC123"</span>,
   <span class="code-key">"status"</span>: <span class="code-string">"synthesizing"</span>,
-  <span class="code-key">"estimated_delivery"</span>: <span class="code-string">"2026-05-01"</span>,
   <span class="code-key">"price"</span>: <span class="code-string">"₩500,000"</span>
 }</pre>
                 </div>
@@ -668,16 +833,14 @@
     </section>
     
     <!-- CTA -->
-    <section class="cta" id="contact">
+    <section class="cta-section" id="contact">
         <div class="container">
             <h2>준비되셨나요? / Ready to Start?</h2>
             <p>AI-설계 peptide, 오늘부터 시작하세요.<br>첫 주문客户提供特別 할인가!</p>
-            <div class="hero-cta">
-                <a href="mailto:contact@peptidelab.kr" class="btn btn-primary">📧 contact@peptidelab.kr</a>
-            </div>
-            <p style="margin-top: 30px; font-size: 0.95rem; opacity: 0.7;">
-                WeChat: peptidelab_kr | Line: @peptidelab
-            </p>
+            <a href="mailto:brownbio.ocm@gmail.com" class="cta-email">
+                📧 brownbio.ocm@gmail.com
+            </a>
+            <p class="cta-note">WeChat: peptidelab_kr | Line: @peptidelab</p>
         </div>
     </section>
     
@@ -686,9 +849,12 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h3>🧬 PeptideLab</h3>
+                    <a href="#" class="logo">
+                        <div class="logo-icon">🧬</div>
+                        PeptideLab
+                    </a>
                     <p>
-                        AI Biotech를 위한 최고의 다肽 합성 파트너.<br>
+                        AI Biotech를 위한 최고의 peptide 합성 파트너.<br>
                         Korean-made quality, global competitive pricing.
                     </p>
                 </div>
@@ -707,12 +873,12 @@
                 <div class="footer-links">
                     <h4>Company</h4>
                     <a href="#">회사 소개</a>
-                    <a href="#">연락처</a>
+                    <a href="mailto:brownbio.ocm@gmail.com">연락처</a>
                     <a href="#">파트너</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 PeptideLab. 한국 제조 / Made in Korea</p>
+                <p>© 2026 PeptideLab. 한국 제조 / Made in Korea | BrownBiotech</p>
             </div>
         </div>
     </footer>
